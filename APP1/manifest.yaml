@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: app1
-  # deployment labels
   namespace: roboshop
   labels:
     purpose: ingress
@@ -10,7 +9,6 @@ metadata:
     app: app1
 spec:
   replicas: 2
-  # These are the labels replica set use to create pod replicas, this should match pod labels
   selector:
     matchLabels:
       purpose: ingress
@@ -70,7 +68,7 @@ metadata:
     alb.ingress.kubernetes.io/group.name: joindevops
 spec:
   rules:
-    - host: app1.rajeshit.space
+    - host: "app1.rajeshit.space"
       http:
         paths:
           - path: /
