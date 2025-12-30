@@ -14,7 +14,6 @@ spec:
       purpose: ingress
       project: roboshop
       app: app1
-  # This is pod definition
   template:
     metadata:
       labels:
@@ -23,18 +22,16 @@ spec:
         app: app1
     spec:
       containers:
-      - name: app1
-        image: rajesh947/app1:v1
+        - name: app1
+          image: rajesh947/app1:v1
+          ports:
+            - containerPort: 80
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: app1
   namespace: roboshop
-  labels:
-    purpose: ingress
-    project: roboshop
-    app: app1
 spec:
   selector:
     purpose: ingress
@@ -42,8 +39,8 @@ spec:
     app: app1
   ports:
     - protocol: TCP
-      port: 80 # service port
-      targetPort: 80 # container port
+      port: 80
+      targetPort: 80
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -55,20 +52,11 @@ metadata:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
-    alb.ingress.kubernetes.io/certificate-arn: apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: roboshop-ingress
-  annotations:
-    kubernetes.io/ingress.class: alb
-    alb.ingress.kubernetes.io/scheme: internet-facing
-    alb.ingress.kubernetes.io/target-type: ip
-    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
-    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:123456789012:certificate/abcd-1234
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:887363634632:certificate/39335b58-c0a1-47b2-89ff-7a601e90a260
     alb.ingress.kubernetes.io/group.name: joindevops
 spec:
   rules:
-    - host: "app1.rajeshit.space"
+    - host: app1.rajeshit.space
       http:
         paths:
           - path: /
@@ -78,7 +66,3 @@ spec:
                 name: app1
                 port:
                   number: 80
-
-    
-
-
