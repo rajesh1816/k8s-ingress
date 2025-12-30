@@ -48,13 +48,13 @@ metadata:
   name: app1
   namespace: roboshop
   annotations:
-    kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
     alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:887363634632:certificate/39335b58-c0a1-47b2-89ff-7a601e90a260
     alb.ingress.kubernetes.io/group.name: joindevops
 spec:
+  ingressClassName: alb
   rules:
     - host: app1.rajeshit.space
       http:
